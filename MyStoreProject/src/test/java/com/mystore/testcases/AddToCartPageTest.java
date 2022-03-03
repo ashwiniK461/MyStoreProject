@@ -7,41 +7,40 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.mystore.base.BaseClass;
-import com.mystore.pageobjects.AccountCreationPage;
+import com.mystore.dataprovider.DataProviders;
 import com.mystore.pageobjects.AddToCartPage;
-import com.mystore.pageobjects.HomePage;
 import com.mystore.pageobjects.IndexPage;
-import com.mystore.pageobjects.LoginPage;
 import com.mystore.pageobjects.SearchResultsPage;
-
+import com.mystore.utility.Log;
 public class AddToCartPageTest extends BaseClass {
-	IndexPage index;
+	
+	private IndexPage index;
 	private SearchResultsPage searchResultPage;
 	private AddToCartPage addToCartPage;
-	
-	
+
 	@Parameters("browser")
 	@BeforeMethod(groups = {"Smoke","Sanity","Regression"})
 	public void setup(String browser) {
 		launchApp(browser); 
 	}
 	
-	@AfterMethod
+	@AfterMethod(groups = {"Smoke","Sanity","Regression"})
 	public void tearDown() {
 		getdriver().quit();
 	}
-	@Test
-	public void addToCartTest() throws Throwable {
-		//Log.startTestCase("addToCartTest");
+	
+	@Test(groups = {"Regression","Sanity"}, dataProvider = "getProduct", dataProviderClass = DataProviders.class)
+	public void addToCartTest(String productName, String qty, String size) throws Throwable {
+		Log.startTestCase("addToCartTest");
 		index= new IndexPage();
-		searchResultPage=index.searchProduct("t-shirt");
+		searchResultPage=index.searchProduct(productName);
 		addToCartPage=searchResultPage.clickOnProduct();
-		addToCartPage.enterQuantity("2");
-		addToCartPage.selectSize("M");
+		addToCartPage.enterQuantity(qty);
+		addToCartPage.selectSize(size);
 		addToCartPage.clickOnAddToCart();
 		boolean result=addToCartPage.validateAddtoCart();
 		Assert.assertTrue(result);
-		//Log.endTestCase("addToCartTest");
+		Log.endTestCase("addToCartTest");
 		
 	}
 }

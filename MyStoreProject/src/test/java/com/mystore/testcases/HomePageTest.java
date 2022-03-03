@@ -13,11 +13,11 @@ import com.mystore.pageobjects.IndexPage;
 import com.mystore.pageobjects.LoginPage;
 import com.mystore.utility.Log;
 
+
 public class HomePageTest extends BaseClass {
 	private IndexPage indexPage;
 	private LoginPage loginPage;
 	private HomePage homePage;
-
 
 	@Parameters("browser")
 	@BeforeMethod(groups = {"Smoke","Sanity","Regression"})
@@ -51,4 +51,5 @@ public class HomePageTest extends BaseClass {
 		Assert.assertTrue(result);
 		Log.endTestCase("orderHistoryandDetailsTest");
 	}
+	
 }

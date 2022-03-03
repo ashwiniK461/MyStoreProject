@@ -8,8 +8,10 @@ import org.testng.annotations.Test;
 
 import com.mystore.actiondriver.Action;
 import com.mystore.base.BaseClass;
+import com.mystore.dataprovider.DataProviders;
 import com.mystore.pageobjects.IndexPage;
 import com.mystore.pageobjects.SearchResultsPage;
+import com.mystore.utility.Log;
 
 public class SearchResultsPageTest extends BaseClass {
 	private IndexPage index;
@@ -21,20 +23,19 @@ public class SearchResultsPageTest extends BaseClass {
 		launchApp(browser); 
 	}
 	
-	@AfterMethod
+	@AfterMethod(groups = {"Smoke","Sanity","Regression"})
 	public void tearDown() {
 		getdriver().quit();
 	}
 	
-	@Test
-	public void productAvailabilityTest() throws Throwable {
-		//Log.startTestCase("productAvailabilityTest");
+	@Test(groups = "Smoke",dataProvider = "searchProduct", dataProviderClass = DataProviders.class)
+	public void productAvailabilityTest(String productName) throws Throwable {
+		Log.startTestCase("productAvailabilityTest");
 		index= new IndexPage();
-		searchResultPage=index.searchProduct("t-shirt");
-		
+		searchResultPage=index.searchProduct(productName);
 		boolean result=searchResultPage.isProductAvailable();
 		Assert.assertTrue(result);
-		//Log.endTestCase("productAvailabilityTest");
+		Log.endTestCase("productAvailabilityTest");
 	}
 
 }

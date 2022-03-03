@@ -19,34 +19,35 @@ import com.mystore.utility.Log;
  *
  */
 public class IndexPageTest extends BaseClass {
-	IndexPage indexPage;
-
+	private IndexPage indexPage;
+    
 	@Parameters("browser")
 	@BeforeMethod(groups = {"Smoke","Sanity","Regression"})
 	public void setup(String browser) {
 		launchApp(browser); 
 	}
-
-	@AfterMethod(groups = { "Smoke", "Sanity", "Regression" })
+	
+	@AfterMethod(groups = {"Smoke","Sanity","Regression"})
 	public void tearDown() {
 		getdriver().quit();
 	}
-
+	
 	@Test(groups = "Smoke")
 	public void verifyLogo() throws Throwable {
 		Log.startTestCase("verifyLogo");
-		indexPage = new IndexPage();
-		boolean result = indexPage.validateLogo();
+		indexPage= new IndexPage();
+		boolean result=indexPage.validateLogo();
 		Assert.assertTrue(result);
 		Log.endTestCase("verifyLogo");
 	}
-
+	
 	@Test(groups = "Smoke")
 	public void verifyTitle() {
 		Log.startTestCase("verifyTitle");
-		String actTitle = indexPage.getMyStoreTitle();
-		Assert.assertEquals(actTitle, "My Store");
+		String actTitle=indexPage.getMyStoreTitle();
+		Assert.assertEquals(actTitle, "My Store1");
 		Log.endTestCase("verifyTitle");
 	}
 
+	
 }
